@@ -50,12 +50,13 @@ header h1 {
   margin-bottom: 14px;
 }
 
+/* ปรับเป็น 5 คอลัมน์รองรับ Best Score */
 .stats-board {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
   background: #0f172a;
-  padding: 10px;
+  padding: 10px 8px;
   border-radius: 12px;
   margin-bottom: 14px;
 }
@@ -66,19 +67,23 @@ header h1 {
 }
 
 .stat-label {
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   color: #64748b;
   font-weight: bold;
 }
 
 .stat-value {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: bold;
   color: #38bdf8;
 }
 
 .combo-box .stat-value {
   color: #f43f5e;
+}
+
+.best-box .stat-value {
+  color: #facc15;
 }
 
 .controls-panel {
@@ -209,6 +214,7 @@ button {
   background: #064e3b;
 }
 
+/* แอนิเมชันสั่นเมื่อเปิดผิด */
 .card.wrong .card-back {
   border-color: #ef4444;
   background: #450a0a;
@@ -268,6 +274,19 @@ button {
   text-align: center;
 }
 
+.new-record {
+  color: #facc15;
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin-top: 6px;
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  from { transform: scale(0.95); }
+  to { transform: scale(1.05); }
+}
+
 .modal-stats {
   margin: 16px 0;
   font-size: 0.9rem;
@@ -279,6 +298,11 @@ button {
 
 .highlight {
   color: #38bdf8;
+  font-weight: bold;
+}
+
+.highlight-best {
+  color: #facc15;
   font-weight: bold;
 }
 
