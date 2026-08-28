@@ -191,6 +191,21 @@ button {
   background: #064e3b;
 }
 
+/* แอนิเมชันสั่นเมื่อจับคู่ผิด */
+.card.wrong .card-back {
+  border-color: #ef4444;
+  background: #450a0a;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: rotateY(180deg) translateX(0); }
+  20% { transform: rotateY(180deg) translateX(-8px); }
+  40% { transform: rotateY(180deg) translateX(8px); }
+  60% { transform: rotateY(180deg) translateX(-6px); }
+  80% { transform: rotateY(180deg) translateX(6px); }
+}
+
 .instructions {
   margin-top: 16px;
   padding: 12px;
