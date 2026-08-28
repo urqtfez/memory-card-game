@@ -1,0 +1,259 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  user-select: none;
+}
+
+body {
+  background: radial-gradient(circle at center, #1b2038 0%, #0d111a 100%);
+  color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+}
+
+.game-container {
+  width: 100%;
+  max-width: 520px;
+  background: rgba(26, 32, 53, 0.85);
+  border: 1px solid #2d3758;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+header h1 {
+  font-size: 1.4rem;
+  margin-top: 6px;
+  letter-spacing: 0.5px;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  background: #2563eb;
+  color: #fff;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin-top: 4px;
+  margin-bottom: 14px;
+}
+
+.stats-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  background: #0f172a;
+  padding: 10px;
+  border-radius: 12px;
+  margin-bottom: 14px;
+}
+
+.stat-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-size: 0.65rem;
+  color: #64748b;
+  font-weight: bold;
+}
+
+.stat-value {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #38bdf8;
+}
+
+.combo-box .stat-value {
+  color: #f43f5e;
+}
+
+.controls-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 8px;
+}
+
+.difficulty-group, .action-group {
+  display: flex;
+  gap: 6px;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.btn-diff {
+  background: #1e293b;
+  color: #94a3b8;
+  padding: 6px 10px;
+  font-size: 0.75rem;
+}
+
+.btn-diff.active {
+  background: #a855f7;
+  color: #fff;
+}
+
+.btn-icon {
+  background: #1e293b;
+  color: #fff;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+}
+
+.btn-restart {
+  background: #06b6d4;
+  color: #042f2e;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+}
+
+.btn-restart:hover {
+  background: #22d3ee;
+}
+
+.grid-container {
+  display: grid;
+  gap: 8px;
+  margin: 0 auto;
+  perspective: 1000px;
+}
+
+.grid-3x4 {
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.grid-4x4 {
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+}
+
+.card {
+  aspect-ratio: 1 / 1;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.4s;
+  cursor: pointer;
+}
+
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  font-size: 1.8rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.card-front {
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  border: 1px solid #334155;
+  color: #64748b;
+}
+
+.card-back {
+  background: linear-gradient(135deg, #334155, #1e293b);
+  border: 2px solid #38bdf8;
+  transform: rotateY(180deg);
+}
+
+.card.matched .card-back {
+  border-color: #22c55e;
+  background: #064e3b;
+}
+
+.instructions {
+  margin-top: 16px;
+  padding: 12px;
+  background: #0b1120;
+  border-radius: 10px;
+  text-align: left;
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.instructions h3 {
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  margin-bottom: 4px;
+}
+
+.instructions ul {
+  padding-left: 18px;
+}
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  padding: 16px;
+}
+
+.modal-overlay.show {
+  display: flex;
+}
+
+.modal-content {
+  background: #1e293b;
+  border: 1px solid #475569;
+  padding: 24px;
+  border-radius: 16px;
+  max-width: 320px;
+  width: 100%;
+  text-align: center;
+}
+
+.modal-stats {
+  margin: 16px 0;
+  font-size: 0.9rem;
+  color: #cbd5e1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.highlight {
+  color: #38bdf8;
+  font-weight: bold;
+}
+
+.btn-modal {
+  background: #22c55e;
+  color: #022c22;
+  padding: 10px 16px;
+  width: 100%;
+  font-size: 0.95rem;
+}
