@@ -14,6 +14,7 @@
       <p class="subtitle">เปิดการ์ดจับคู่สัญลักษณ์ต่อเนื่องเพื่อเพิ่มตัวคูณ Combo สูงสุด!</p>
     </header>
 
+    <!-- กระดานสถิติ 5 ช่อง พร้อม Best Score -->
     <div class="stats-board">
       <div class="stat-box">
         <span class="stat-label">⏱ TIME</span>
@@ -31,9 +32,13 @@
         <span class="stat-label">🏆 SCORE</span>
         <span class="stat-value" id="score">0</span>
       </div>
+      <div class="stat-box best-box">
+        <span class="stat-label">👑 BEST</span>
+        <span class="stat-value" id="bestScore">0</span>
+      </div>
     </div>
 
-    <!-- แผงเลือกความยากและหมวดหมู่ -->
+    <!-- แผงเลือกความยาก หมวดหมู่ และปุ่มควบคุม -->
     <div class="controls-panel">
       <div class="selector-group">
         <div class="btn-group">
@@ -58,21 +63,25 @@
       <h3>วิธีเล่นและกติกา</h3>
       <ul>
         <li>เลือกหมวดหมู่และระดับความยากตามต้องการ</li>
-        <li>แตะหรือคลิกการ์ดเพื่อเปิดดูภาพสัญลักษณ์ (จับคู่ถูกได้ฐาน 100 แต้ม)</li>
-        <li><strong>ระบบ Combo:</strong> จับคู่ถูกต่อเนื่องเพื่อเพิ่มตัวคูณคะแนน (x2, x3...) หากเปิดผิดจะสั่นเตือนและรีเซ็ตตัวคูณเป็น x1 ทันที</li>
+        <li>จับคู่ภาพเหมือนกันได้คะแนนฐาน 100 แต้ม</li>
+        <li><strong>ระบบ Combo:</strong> จับคู่ถูกต่อเนื่องเพื่อเพิ่มตัวคูณคะแนน หากเปิดผิดจะสั่นเตือนและรีเซ็ต Combo เป็น x1</li>
+        <li><strong>Best Score:</strong> ระบบจะบันทึกคะแนนสูงสุดที่ดีที่สุดของคุณไว้โดยอัตโนมัติ</li>
       </ul>
     </section>
   </div>
 
+  <!-- หน้าต่างแจ้งผลชนะ -->
   <div class="modal-overlay" id="winModal">
     <div class="modal-content">
       <h2>🎉 STAGE CLEAR!</h2>
+      <p id="newRecordNotice" class="new-record" style="display: none;">🌟 สถิติคะแนนสูงสุดใหม่! 🌟</p>
       <p>ยินดีด้วย คุณจับคู่การ์ดสำเร็จทั้งหมด</p>
       <div class="modal-stats">
         <div>เวลาที่ใช้: <span id="finalTime">00:00</span></div>
         <div>จำนวนครั้งที่เปิด: <span id="finalTurns">0</span></div>
         <div>Combo สูงสุด: <span id="finalCombo">x1</span></div>
-        <div>คะแนนรวม: <span id="finalScore" class="highlight">0</span></div>
+        <div>คะแนนรอบนี้: <span id="finalScore" class="highlight">0</span></div>
+        <div>คะแนนสูงสุดตลอดกาล: <span id="finalBest" class="highlight-best">0</span></div>
       </div>
       <button id="playAgainBtn" class="btn-modal">เล่นใหม่อีกครั้ง</button>
     </div>
