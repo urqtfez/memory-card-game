@@ -1,6 +1,12 @@
-const ICONS = ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯'];
+// ชุดข้อมูลสัญลักษณ์แยกตามหมวดหมู่
+const CATEGORIES = {
+  animals: ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯'],
+  fruits: ['🍎', '🍌', '🍉', '🍇', '🍓', '🍒', '🍍', '🥝', '🍑', '🥑'],
+  sweets: ['🍩', '🍦', '🍰', '🍪', '🍫', '🍬', '🧁', '🍮', '🥞', '🍭']
+};
 
-let difficulty = 'easy'; // easy = 3x4 (12 cards / 6 pairs), normal = 4x4 (16 cards / 8 pairs)
+let currentCategory = 'animals';
+let difficulty = 'easy'; // easy = 3x4 (12 ใบ / 6 คู่), normal = 4x4 (16 ใบ / 8 คู่)
 let cards = [];
 let flippedCards = [];
 let matchedPairs = 0;
@@ -14,7 +20,6 @@ let timerInterval = null;
 let lockBoard = false;
 let soundEnabled = true;
 
-// Audio Context สำหรับสร้างเสียงเอฟเฟกต์
 const AudioCtx = window.AudioContext || window.webkitAudioContext;
 let audioCtx = null;
 
@@ -44,6 +49,7 @@ const winModal = document.getElementById('winModal');
 
 function initGame() {
   clearInterval(timerInterval);
+  timerInterval = null;
   timer = 0;
   turns = 0;
   score = 0;
@@ -62,7 +68,9 @@ function initGame() {
   totalPairs = difficulty === 'easy' ? 6 : 8;
   gridEl.className = `grid-container grid-${difficulty === 'easy' ? '3x4' : '4x4'}`;
 
-  const selectedIcons = ICONS.slice(0, totalPairs);
+  // สุ่มการ์ดตามหมวดหมู่ที่เลือก
+  const activeIcons = CATEGORIES[currentCategory] || CATEGORIES.animals;
+  const selectedIcons = activeIcons.slice(0, totalPairs);
   const deck = [...selectedIcons, ...selectedIcons].sort(() => Math.random() - 0.5);
 
   gridEl.innerHTML = '';
@@ -127,12 +135,15 @@ function checkMatch() {
       if (matchedPairs === totalPairs) handleGameOver();
     }, 400);
   } else {
+    card1.classList.add('wrong');
+    card2.classList.add('wrong');
+    playBeep(200, 'sawtooth', 0.15);
+
     setTimeout(() => {
-      card1.classList.remove('flipped');
-      card2.classList.remove('flipped');
+      card1.classList.remove('flipped', 'wrong');
+      card2.classList.remove('flipped', 'wrong');
       combo = 1;
       comboEl.textContent = 'x1';
-      playBeep(200, 'sawtooth', 0.15);
       resetTurn();
     }, 900);
   }
@@ -156,12 +167,22 @@ function handleGameOver() {
   }, 500);
 }
 
-// Event Listeners
+// Event Listeners: ระดับความยาก
 document.querySelectorAll('.btn-diff').forEach(btn => {
   btn.addEventListener('click', (e) => {
     document.querySelectorAll('.btn-diff').forEach(b => b.classList.remove('active'));
     e.target.classList.add('active');
     difficulty = e.target.dataset.diff;
+    initGame();
+  });
+});
+
+// Event Listeners: เลือกหมวดหมู่ (สัตว์, ผลไม้, ขนม)
+document.querySelectorAll('.btn-cat').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    document.querySelectorAll('.btn-cat').forEach(b => b.classList.remove('active'));
+    e.target.classList.add('active');
+    currentCategory = e.target.dataset.cat;
     initGame();
   });
 });
@@ -174,5 +195,4 @@ document.getElementById('soundToggle').addEventListener('click', (e) => {
   e.target.textContent = soundEnabled ? '🔊' : '🔇';
 });
 
-// เริ่มเกมทันทีเมื่อโหลดหน้าเว็บ
 initGame();
