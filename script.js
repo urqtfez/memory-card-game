@@ -1,4 +1,4 @@
-// ชุดข้อมูลสัญลักษณ์แยกตามหมวดหมู่
+// ชุดข้อมูลสัญลักษณ์แยกหมวดหมู่
 const CATEGORIES = {
   animals: ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯'],
   fruits: ['🍎', '🍌', '🍉', '🍇', '🍓', '🍒', '🍍', '🥝', '🍑', '🥑'],
@@ -12,6 +12,7 @@ let flippedCards = [];
 let matchedPairs = 0;
 let totalPairs = 6;
 let score = 0;
+let bestScore = parseInt(localStorage.getItem('memory_game_best_score')) || 0;
 let combo = 1;
 let maxCombo = 1;
 let turns = 0;
@@ -20,6 +21,7 @@ let timerInterval = null;
 let lockBoard = false;
 let soundEnabled = true;
 
+// Web Audio API
 const AudioCtx = window.AudioContext || window.webkitAudioContext;
 let audioCtx = null;
 
@@ -45,7 +47,9 @@ const timeEl = document.getElementById('time');
 const turnsEl = document.getElementById('turns');
 const comboEl = document.getElementById('combo');
 const scoreEl = document.getElementById('score');
+const bestScoreEl = document.getElementById('bestScore');
 const winModal = document.getElementById('winModal');
+const newRecordNotice = document.getElementById('newRecordNotice');
 
 function initGame() {
   clearInterval(timerInterval);
@@ -63,12 +67,13 @@ function initGame() {
   turnsEl.textContent = '00';
   comboEl.textContent = 'x1';
   scoreEl.textContent = '0';
+  bestScoreEl.textContent = bestScore;
   winModal.classList.remove('show');
+  newRecordNotice.style.display = 'none';
 
   totalPairs = difficulty === 'easy' ? 6 : 8;
   gridEl.className = `grid-container grid-${difficulty === 'easy' ? '3x4' : '4x4'}`;
 
-  // สุ่มการ์ดตามหมวดหมู่ที่เลือก
   const activeIcons = CATEGORIES[currentCategory] || CATEGORIES.animals;
   const selectedIcons = activeIcons.slice(0, totalPairs);
   const deck = [...selectedIcons, ...selectedIcons].sort(() => Math.random() - 0.5);
@@ -131,6 +136,13 @@ function checkMatch() {
       comboEl.textContent = `x${combo}`;
       playBeep(600, 'triangle', 0.2);
 
+      // อัปเดต Best Score ทันทีถ้าคะแนนแซงสถิติเดิม
+      if (score > bestScore) {
+        bestScore = score;
+        localStorage.setItem('memory_game_best_score', bestScore);
+        bestScoreEl.textContent = bestScore;
+      }
+
       resetTurn();
       if (matchedPairs === totalPairs) handleGameOver();
     }, 400);
@@ -157,17 +169,31 @@ function resetTurn() {
 function handleGameOver() {
   clearInterval(timerInterval);
   timerInterval = null;
+
+  let isNewRecord = false;
+  if (score >= bestScore && score > 0) {
+    bestScore = score;
+    localStorage.setItem('memory_game_best_score', bestScore);
+    isNewRecord = true;
+  }
+
   setTimeout(() => {
     document.getElementById('finalTime').textContent = timeEl.textContent;
     document.getElementById('finalTurns').textContent = turns;
     document.getElementById('finalCombo').textContent = `x${maxCombo}`;
     document.getElementById('finalScore').textContent = score;
+    document.getElementById('finalBest').textContent = bestScore;
+
+    if (isNewRecord) {
+      newRecordNotice.style.display = 'block';
+    }
+
     winModal.classList.add('show');
     playBeep(800, 'sine', 0.4);
   }, 500);
 }
 
-// Event Listeners: ระดับความยาก
+// Event Listeners: เลือกระดับความยาก
 document.querySelectorAll('.btn-diff').forEach(btn => {
   btn.addEventListener('click', (e) => {
     document.querySelectorAll('.btn-diff').forEach(b => b.classList.remove('active'));
@@ -177,7 +203,7 @@ document.querySelectorAll('.btn-diff').forEach(btn => {
   });
 });
 
-// Event Listeners: เลือกหมวดหมู่ (สัตว์, ผลไม้, ขนม)
+// Event Listeners: เลือกหมวดหมู่อิโมจิ
 document.querySelectorAll('.btn-cat').forEach(btn => {
   btn.addEventListener('click', (e) => {
     document.querySelectorAll('.btn-cat').forEach(b => b.classList.remove('active'));
@@ -195,4 +221,5 @@ document.getElementById('soundToggle').addEventListener('click', (e) => {
   e.target.textContent = soundEnabled ? '🔊' : '🔇';
 });
 
+// เริ่มต้นเกม
 initGame();
