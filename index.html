@@ -33,10 +33,18 @@
       </div>
     </div>
 
+    <!-- แผงเลือกความยากและหมวดหมู่ -->
     <div class="controls-panel">
-      <div class="difficulty-group">
-        <button class="btn-diff active" data-diff="easy">EASY (3x4)</button>
-        <button class="btn-diff" data-diff="normal">NORMAL (4x4)</button>
+      <div class="selector-group">
+        <div class="btn-group">
+          <button class="btn-opt btn-diff active" data-diff="easy">EASY (3x4)</button>
+          <button class="btn-opt btn-diff" data-diff="normal">NORMAL (4x4)</button>
+        </div>
+        <div class="btn-group">
+          <button class="btn-opt btn-cat active" data-cat="animals">🐶 สัตว์</button>
+          <button class="btn-opt btn-cat" data-cat="fruits">🍎 ผลไม้</button>
+          <button class="btn-opt btn-cat" data-cat="sweets">🍩 ขนม</button>
+        </div>
       </div>
       <div class="action-group">
         <button id="soundToggle" class="btn-icon" title="เปิด/ปิดเสียง">🔊</button>
@@ -49,9 +57,9 @@
     <section class="instructions">
       <h3>วิธีเล่นและกติกา</h3>
       <ul>
-        <li>แตะหรือคลิกการ์ดเพื่อเปิดดูภาพสัญลักษณ์</li>
-        <li>จับคู่ภาพเหมือนกันได้คะแนนฐาน 100 แต้ม</li>
-        <li><strong>ระบบ Combo:</strong> จับคู่ถูกต่อเนื่องเพื่อเพิ่มตัวคูณคะแนน (x2, x3...) หากเปิดผิดตัวคูณจะรีเซ็ตเป็น x1 ทันที</li>
+        <li>เลือกหมวดหมู่และระดับความยากตามต้องการ</li>
+        <li>แตะหรือคลิกการ์ดเพื่อเปิดดูภาพสัญลักษณ์ (จับคู่ถูกได้ฐาน 100 แต้ม)</li>
+        <li><strong>ระบบ Combo:</strong> จับคู่ถูกต่อเนื่องเพื่อเพิ่มตัวคูณคะแนน (x2, x3...) หากเปิดผิดจะสั่นเตือนและรีเซ็ตตัวคูณเป็น x1 ทันที</li>
       </ul>
     </section>
   </div>
